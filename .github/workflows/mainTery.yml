@@ -92,9 +92,9 @@ jobs:
         run: |
           terraform -chdir="$ENV" plan -var-file="tf.creds.config.json"
       
-      - name: Run Terraform Apply
-        run: |
-          terraform -chdir="$ENV" apply --auto-approve -var-file="tf.creds.config.json"
+#      - name: Run Terraform Apply
+#        run: |
+#          terraform -chdir="$ENV" apply --auto-approve -var-file="tf.creds.config.json"
       
       
       - name: Run Terraform Output
