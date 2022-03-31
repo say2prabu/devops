@@ -1,0 +1,29 @@
+{
+        "name": {
+            "value": "blsendgrid"
+        },
+        "planId": {
+            "value": "Essentials-40K"
+        },
+        "offerId": {
+            "value": "tsg-saas-offer"
+        },
+        "quantity": {
+            "value": 1
+        },
+        "termId": {
+            "value": "hjdtn7tfnxcy"
+        },
+        "azureSubscriptionId": {
+            "value": "4835cc54-d5c8-41f4-bca9-ab13fc6fa61f"
+        },
+        "publisherTestEnvironment": {
+            "value": ""
+        },
+        "autoRenew": {
+            "value": true
+        },
+        "tags": {
+            "value": {}
+        }
+}
