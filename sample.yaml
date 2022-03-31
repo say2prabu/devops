@@ -1,0 +1,7 @@
+Env: dev
+ApplicationName: app1
+virtualmachine-linux:
+  vm1:
+    name: virtualMachine1
+    type: D2_V1
+    image: linux1
