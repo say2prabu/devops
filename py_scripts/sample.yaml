@@ -1,0 +1,14 @@
+Env: dev
+ApplicationName: app1
+virtualmachine-linux:
+  vm1:
+    azure_region: westeurope
+    organization-code: sei
+    subscription-code: lz1
+    environment-code: d
+    rg_name: cu7-lnd1-d-rsg-spoke-network
+    rg_location: West Europe
+    vnet_name: sie-lan1-t-euwe-vnet-spoke
+    subnet_name: sie-lan1-t-euwe-snet-spoke-TEST
+    nic_name: vm1-nic
+    vm_size: Standard_B2ms

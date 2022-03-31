@@ -1,0 +1,37 @@
+Env: dev
+ApplicationName: app1
+vm:
+  vm1:
+    name: virtualMachine1
+    type: D2_V1
+    image: linux1
+  vm2:
+    name: virtualMachine2
+    type: D2_V2
+    image: ubuntu
+
+  vm3:
+    name: virtualMachine-for-test
+    type: D2_V4
+    image: windowserver2021
+apps:
+  apps:
+    name: app-service1
+    type: D2_V1
+  vm1:
+    name: app-service2
+    type: D2_V1
+sql:
+  sql1:
+    name: sql-server1
+    type: D2_V1
+  sql2:
+    name: sql-server2
+    type: D2_V1
+nosql:
+  nosql1:
+    name: nosql-server1
+    type: D2_V1
+  nosql2:
+    name: nosql-sever2
+    type: D2_V1
