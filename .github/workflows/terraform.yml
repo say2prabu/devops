@@ -83,7 +83,10 @@ jobs:
           ls -ltr
           ls -ltr $ENV
           cat $ENV/main.tf
-            
+       
+      - name: Run build
+        Env:
+        PLAN_NAME: ${{secrets.TESTPLAN}}
           
       - name: Run Terraform Init
         if: env.APP == 'app3'
