@@ -1,0 +1,108 @@
+# This is a basic workflow to help you get started with Actions
+
+name: MainCI
+env:
+
+#  ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+#  ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+#  ARM_SUBSCRIPTION_ID: ${{ secrets.SUB_ID_LZ1 }}
+#  ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+#  ARM_ACCESS_KEY: ${{ secrets.DEV_SA_TOKEN }}
+#  SUB_ID_LZ1: ${{ secrets.SUB_ID_LZ1 }}
+#  TF_STATE_SA_RG_NAME: ${{ secrets.SA_RG_NAME }}
+#  TF_STATE_SA_NAME: ${{ secrets.SA_NAME }}
+#  TF_STATE_SA_CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+  
+
+  
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    paths:
+    - 'dev.yaml'
+    - '.github/workflows/terraform.yml'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Create config.json file
+        run: |
+           export ENV=$(yq eval --output-format=json dev.yaml | jq -r '.Env')
+           export APP=$(yq eval --output-format=json dev.yaml | jq -r '.ApplicationName')
+           export TF_STATE_FILE_NAME="$ENV-$APP.json"
+           echo "ENV=$ENV" >> $GITHUB_ENV
+           echo "APP=$APP" >> $GITHUB_ENV
+          
+
+           
+           echo '{
+            "resource_group_name": "'${TF_STATE_SA_RG_NAME}'",
+            "storage_account_name": "'${TF_STATE_SA_NAME}'",
+            "container_name": "'${TF_STATE_SA_CONTAINER_NAME}'",
+            "subscription_id": "'${SUB_ID_LZ1}'",
+            "access_key": "'${ARM_ACCESS_KEY}'",
+            "key":  "'$TF_STATE_FILE_NAME'",
+            "tenant_id" : "'${ARM_TENANT_ID}'"
+            }' > tf.backend.config.json
+            
+           echo '{
+            "subscription_id": "'${ARM_SUBSCRIPTION_ID}'",
+             "tenant_id" : "'${ARM_TENANT_ID}'",
+             "client_id": "'${ARM_CLIENT_ID}'",
+             "client_secret": "'${ARM_CLIENT_SECRET}'"
+            }' > tf.creds.config.json
+           
+           mkdir $ENV
+           cp tf.backend.config.json $ENV/tf.backend.config.json
+           cp tf.creds.config.json $ENV/tf.creds.config.json
+      
+ 
+      # Runs a set of commands using the runners shell
+      - name: Convert Input file in JSON and create TF Modules structure
+        run: |
+          ls -ltr
+          python ./py_scripts/create_module.py dev.yaml
+          cp py_scripts/provider.tf $ENV/provider.tf
+          cp main.tf $ENV/main.tf
+          ls -ltr
+          ls -ltr $ENV
+          cat $ENV/main.tf
+            
+          
+      - name: Run Terraform Init
+        if: env.APP == 'app3'
+        run: |
+           echo "Sucessfully passed the If condition
+#          terraform version
+#          terraform -chdir="$ENV" init --backend-config tf.backend.config.json
+          
+          
+#      - name: Run Terraform Plan
+#        run: |
+#          terraform -chdir="$ENV" plan -var-file="tf.creds.config.json"
+      
+#      - name: Run Terraform Apply
+#        run: |
+#          terraform -chdir="$ENV" apply --auto-approve -var-file="tf.creds.config.json"
+      
+      
+#      - name: Run Terraform Output
+#        run: |
+#          terraform -chdir="$ENV" output
+      
