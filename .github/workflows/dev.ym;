@@ -1,0 +1,45 @@
+#Env: dev
+#ApplicationName: app2
+#vm-linux:
+#  vm1:
+#    azure_region: westeurope
+#    organization-code: sei
+#    subscription-code: lz1
+#    environment-code: d
+#    vnet_rg_name: sie-lan1-t-rsg-spoke-network
+#    rg_location: West Europe
+#    vnet_name: sie-lan1-t-euwe-vnet-spoke
+#    subnet_name: sie-lan1-t-euwe-snet-spoke-TEST
+#    rg_name: SIE-LAN1-T-RSG-VM
+#    vm_size: Standard_DS1_v2
+#    tags:
+#      User_id: A827884
+#      User_email: rohit.kamle@atos.net
+#      Dapartment: CES
+#      AtosManaged: 'true'
+#      AtosCompliance: 'true'
+#      AtosEncryption: 'true'
+#      AtosBackup: 'PROD'
+
+
+Env: dev
+ApplicationName: app3
+vm-windows:
+  vm2:
+    azure_region: westeurope
+    organization-code: sie
+    subscription-code: lan1
+    environment-code: t
+    rg_location: West Europe
+    vnet_name: sie-lan1-t-euwe-vnet-spoke
+    subnet_name: sie-lan1-t-euwe-snet-spoke-Staging
+    rg_name: sie-lan1-t-rsg-spoke-network
+    vm_size: Standard_DS1_v2
+    tags:
+      User_id: A827884
+      User_email: rohit.kamle@atos.net
+      Dapartment: CES
+      AtosManaged: 'true'
+      AtosCompliance: 'true'
+      AtosEncryption: 'true'
+      AtosBackup: 'PROD'
