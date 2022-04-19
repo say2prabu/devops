@@ -1,8 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
 name: MainCI
-#env:
-
+env:
+   PLAN_NAME: ${{ secrets.TESTPLAN }}
 #  ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
 #  ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
 #  ARM_SUBSCRIPTION_ID: ${{ secrets.SUB_ID_LZ1 }}
