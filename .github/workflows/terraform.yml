@@ -28,12 +28,8 @@ jobs:
 
       - name: Create an issue
         if: 5 > 4
-        inputs:
-          numOctocats:
-            description: 'Approved or Rejected'
-            required: true
-            default: '1'
-          
+        run:|
+        echo "inputs.allowed_features: ${{ inputs.allowed_features }}"
 #        uses: JasonEtco/create-an-issue@v2.6.0
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
