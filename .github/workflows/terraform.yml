@@ -28,15 +28,12 @@ jobs:
 
       - name: Create an issue
         if: 5 > 4
-        run: |
-          val = input("Enter your value: ")
-          print(val)
-#        uses: JasonEtco/create-an-issue@v2.6.0
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          RUNNUMBER: ${{ github.run_number }}
-#        with:
-#          filename: .github/deployment-approval.yml
+        uses: JasonEtco/create-an-issue@v2.6.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUNNUMBER: ${{ github.run_number }}
+        with:
+          filename: .github/deployment-approval.yml
   
 
   parse:
