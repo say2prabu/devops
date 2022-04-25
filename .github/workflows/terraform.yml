@@ -29,8 +29,8 @@ jobs:
       - name: Create an issue
         if: 5 > 4
         run: |
-          echo "ENV"
-          echo "inputs.allowed_features: ${{ inputs.allowed_features }}"
+          val = input("Enter your value: ")
+          print(val)
 #        uses: JasonEtco/create-an-issue@v2.6.0
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
