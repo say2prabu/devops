@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUNNUMBER: ${{ github.run_number }}
         with:
-          filename: .github/deployment-approval.yml
+          filename: .github/deployment-approval.md
   
 
   parse:
