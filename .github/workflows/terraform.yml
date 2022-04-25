@@ -28,12 +28,18 @@ jobs:
 
       - name: Create an issue
         if: 5 > 4
-        uses: JasonEtco/create-an-issue@v2.6.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUNNUMBER: ${{ github.run_number }}
-        with:
-          filename: .github/deployment-approval.yml
+        inputs:
+          numOctocats:
+            description: 'Approved or Rejected'
+            required: true
+            default: '1'
+          
+#        uses: JasonEtco/create-an-issue@v2.6.0
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          RUNNUMBER: ${{ github.run_number }}
+#        with:
+#          filename: .github/deployment-approval.yml
   
 
   parse:
