@@ -13,8 +13,6 @@ jobs:
   parse:
     if: ${{ github.event.comment.body == 'Approved'}}
     runs-on: ubuntu-latest
-    outputs: 
-      ci-run-number: ${{ fromJSON(steps.issue_body_parser.outputs.payload).runNumber }}
     steps:
       - name: Comment on Issue
         uses: peter-evans/create-or-update-comment@v1
