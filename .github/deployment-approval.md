@@ -8,8 +8,8 @@ Comment "Approved" to kick the deployment off
 
 === DON'T CHANGE THE BELOW LINE
 
-'''json target_payload
-{
-  "runNumber": {{ env.RUNNUMBER}},
-}
-'''
+```json target_payload
+   {
+        "runNumber": {{ env.RUNNUMBER}},
+    }
+```
