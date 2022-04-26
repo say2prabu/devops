@@ -74,6 +74,7 @@ jobs:
 
       - name: Install yq tool
         run: |
+          echo "$RES"
           wget --no-verbose --quiet https://github.com/mikefarah/yq/releases/download/v4.24.4/yq_linux_386.tar.gz -O - |\
           tar xz && sudo mv yq_linux_386 /usr/bin/yq
       - name: Install Python pip
