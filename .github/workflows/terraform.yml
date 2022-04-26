@@ -77,6 +77,6 @@ jobs:
         #   terraform_version: 1.1.8
         
       - name: Create config.json file
-        if: ${{ github.event_name == 'pull_request' || github.event.comment.body == 'Approved' }}
+        if: ${{ steps.check.outputs.triggered == 'true' || github.event.comment.body == 'Approved' }}
         run: |
           echo "ENV"
