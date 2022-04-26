@@ -59,7 +59,7 @@ jobs:
           RUNNUMBER: ${{ github.run_number }}
         with:
           filename: .github/deployment-approval.md
-        - name: Validation
+      - name: Validation
         run: 
           echo "APPROVAL = Required" >> $GITHUB_ENV                
 
