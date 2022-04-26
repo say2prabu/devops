@@ -61,7 +61,7 @@ jobs:
         with:
           filename: .github/deployment-approval.md
       - name: Check on failure
-        if: job.steps.validation.status == failure
+        if: job.steps.validation.status == failure()
         run:
           exit 1           
 
