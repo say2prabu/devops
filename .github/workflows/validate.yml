@@ -63,7 +63,6 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-    
       - name: Create an issue
     
         uses: JasonEtco/create-an-issue@v2.6.0
@@ -72,8 +71,7 @@ jobs:
           RUNNUMBER: ${{ github.run_number }}
         with:
           filename: .github/deployment-approval.md
-      - name: Validation
-        
+            
   verify:
     runs-on: ubuntu-latest
     needs: [resource_validation]
