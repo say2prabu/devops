@@ -60,10 +60,10 @@ jobs:
           RUNNUMBER: ${{ github.run_number }}
         with:
           filename: .github/deployment-approval.md
-      -name: Check on failure
-       if: job.steps.validation.status == failure
-       run:
-        exit 1           
+      - name: Check on failure
+        if: job.steps.validation.status == failure
+        run:
+          exit 1           
 
 
   verify:
