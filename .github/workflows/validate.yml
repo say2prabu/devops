@@ -62,8 +62,10 @@ jobs:
           filename: .github/deployment-approval.md
       - name: skip-job
         if: ${{ steps.validation.outputs.skip }}
-        run:
-          exit 1           
+        uses: actions/github-script@v3
+        with:
+          script:
+            core.setFailed('Resource is less than or equal to 10')           
 
 
   verify:
