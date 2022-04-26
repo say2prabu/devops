@@ -22,7 +22,7 @@ on:
       - main
   
   issue_comment:
-    type: [created]
+    types: [created]
     # paths:
     # - 'dev.yaml'
     # - '.github/workflows/main.yml'
