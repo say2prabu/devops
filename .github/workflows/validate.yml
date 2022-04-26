@@ -60,9 +60,9 @@ jobs:
         with:
           filename: .github/deployment-approval.md
       - name: Validation
-        run:
         env:
-          APPROVAL: Required 
+          APPROVAL: Required
+        run:
           echo "APPROVAL = $APPROVAL" >> $GITHUB_ENV
           echo "$APPROVAL"                
 
