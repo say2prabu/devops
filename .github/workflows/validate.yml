@@ -52,13 +52,19 @@ jobs:
           echo "RES=$(python ./py_scripts/resource_validation.py)" >> $GITHUB_ENV                
 
       - name: Create an issue
+        id: validation
         if: env.RES > 4
         uses: JasonEtco/create-an-issue@v2.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUNNUMBER: ${{ github.run_number }}
         with:
-          filename: .github/deployment-approval.md           
+          filename: .github/deployment-approval.md
+      -name: Check on failure
+       if: job.steps.validation.status == failure
+       run:
+        exit 1           
+
 
   verify:
     runs-on: ubuntu-latest
