@@ -60,7 +60,7 @@ jobs:
 
   verify:
     needs: [pending_for_approval]
-    if: ${{ always() }}
+    if: ${{ github.event.issue.pull_request && github.event.comment.body != 'Approved' }}
     runs-on: ubuntu-latest
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
