@@ -74,7 +74,7 @@ jobs:
   pending_for_approval:
     runs-on: ubuntu-latest
     needs: [approval_required]
-    if: ${{ !github.event.issue.pull_request && github.event.comment.body == 'Approved' }}
+    if: ${{ needs.approval_required.result != 'success' && github.event.comment.body == 'Approved' }}
     defaults:
       run:
         shell: bash
