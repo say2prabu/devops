@@ -24,7 +24,7 @@ locals {
   random_safe_generation     = join("", [random_string.first_letter.result, random_string.main.result])
   random                     = substr(coalesce(var.unique-seed, local.random_safe_generation), 0, var.unique-length)
   suffix                     = lower(join("-", var.suffix))
-  suffix_unique              = lower(join("-", concat(var.suffix, [local.random])))
+  suffix_unique              = lower(join("", concat(var.suffix, [local.random])))
   sasuffix                   = lower(join("", var.suffix))
   sasuffix_unique            = lower(join("", concat(var.suffix, [local.random])))
   analysissuffix             = lower(join("", var.suffix))

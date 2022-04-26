@@ -1,1 +1,54 @@
-{"Env": "dev", "ApplicationName": "app1", "vm": {"vm1": {"name": "virtualMachine1", "type": "D2_V1", "image": "linux1"}, "vm2": {"name": "virtualMachine2", "type": "D4_V2", "image": "ubuntu"}}, "apps": {"apps": {"name": "app-service1", "type": "D2_V1"}, "vm1": {"name": "app-service2", "type": "D2_V1"}}, "sql": {"sql1": {"name": "sql-server1", "type": "D2_V1"}, "sql2": {"name": "sql-server2", "type": "D2_V1"}}, "nosql": {"nosql1": {"name": "nosql-server1", "type": "D2_V1"}, "nosql2": {"name": "nosql-sever2", "type": "D2_V1"}}, "aks": {"aks1": {"name": "aks1", "nodes_min": 1, "nodes_max": 10, "version": 1.2}}}
+{
+    "Env": "dev",
+    "ApplicationName": "app1",
+    "vm": {
+        "vm1": {
+            "name": "virtualMachine1",
+            "type": "D2_V1",
+            "image": "linux1"
+        },
+        "vm2": {
+            "name": "virtualMachine2",
+            "type": "D4_V2",
+            "image": "ubuntu"
+        }
+    },
+    "apps": {
+        "apps": {
+            "name": "app-service1",
+            "type": "D2_V1"
+        },
+        "vm1": {
+            "name": "app-service2",
+            "type": "D2_V1"
+        }
+    },
+    "sql": {
+        "sql1": {
+            "name": "sql-server1",
+            "type": "D2_V1"
+        },
+        "sql2": {
+            "name": "sql-server2",
+            "type": "D2_V1"
+        }
+    },
+    "nosql": {
+        "nosql1": {
+            "name": "nosql-server1",
+            "type": "D2_V1"
+        },
+        "nosql2": {
+            "name": "nosql-sever2",
+            "type": "D2_V1"
+        }
+    },
+    "aks": {
+        "aks1": {
+            "name": "aks1",
+            "nodes_min": 1,
+            "nodes_max": 10,
+            "version": 1.2
+        }
+    }
+}

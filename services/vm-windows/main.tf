@@ -20,7 +20,7 @@ module "virtual-machine" {
 
 
     # variables for the nic
-    nic_name = var.nic_name
+    nic_name = "${module.naming.virtual_machine_windows.name}-nic"
 
     # variables for the vm
     vm_name = module.naming.virtual_machine_windows.name

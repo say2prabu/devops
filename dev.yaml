@@ -1,43 +1,262 @@
 Env: dev
-ApplicationName: app2
+ApplicationName: app3
+vm-windows:
+  vm32:
+    azure_region: westeurope
+    organization-code: sie
+    subscription-code: lan1
+    environment-code: t
+    rg_location: West Europe
+    vnet_name: sie-lz1-d-rsg-acp-vnet
+    subnet_name: default
+    rg_name: sie-lz1-d-rsg-acp
+    vm_size: Standard_DS1_v2
+    tags:
+      User_id: A827884
+      User_email: Jason@atos.net
+      Dapartment: CES
+      AtosManaged: 'true'
+      AtosSoftware: 'true'
+      AtosCompliance: 'true'
+      AtosEncryption: 'true'
+      AtosBackup: 'PROD'
+      AtosPatching: 'Windows-Prod'
+      AtosAntiMalware: 'true'
+
 vm-linux:
-  vm1:
+  vm11:
     azure_region: westeurope
     organization-code: sei
     subscription-code: lz1
     environment-code: d
-    vnet_rg_name: sie-lan1-t-rsg-spoke-network
+    vnet_rg_name: sie-lz1-d-rsg-acp
     rg_location: West Europe
-    vnet_name: sie-lan1-t-euwe-vnet-spoke
-    subnet_name: sie-lan1-t-euwe-snet-spoke-TEST
-    rg_name: SIE-LAN1-T-RSG-VM
+    vnet_name: sie-lz1-d-rsg-acp-vnet
+    subnet_name: default
+    rg_name: sie-lz1-d-rsg-acp
     vm_size: Standard_DS1_v2
     tags:
       User_id: A827884
-      User_email: rohit.kamle@atos.net
+      User_email: Jason@atos.net
       Dapartment: CES
       AtosManaged: 'true'
       AtosCompliance: 'true'
+      AtosBackup: 'PROD'
+      AtosPatching: 'Linux-Prod'
       AtosEncryption: 'true'
 
-Env: dev
-ApplicationName: app4
-vm-windows:
-  vm2:
+app_service_plan:
+  app_service_plan_1:
     azure_region: westeurope
-    organization-code: sei
+    organization-code: sie
     subscription-code: lz1
     environment-code: d
-    vnet_rg_name: sie-lan1-t-rsg-spoke-network
-    rg_location: West Europe
-    vnet_name: sie-lan1-t-euwe-vnet-spoke
-    subnet_name: sie-lan1-t-euwe-snet-spoke-TEST
-    rg_name: SIE-LAN1-T-RSG-VM
-    vm_size: Standard_DS1_v2
+    service_plan_name: app_service_plan_1
+    service_plan_definition:
+      kind: Windows
+      size: P1v2
+      tier: PremiumV2
+      per_site_scaling: 'true'
     tags:
-      User_id: A827884
-      User_email: rohit.kamle@atos.net
+      User_id: A601880
+      User_email: john.gonzalez@atos.net
       Dapartment: CES
       AtosManaged: 'true'
       AtosCompliance: 'true'
       AtosEncryption: 'true'
+      AtosBackup: 'PROD'
+
+mysql-database:
+  mysql1:
+    azure_region: westeurope
+    organization-code: sie
+    subscription-code: lan1
+    environment-code: t
+    mysql_server_resource_group_name: sie-lan1-t-rsg-spoke-network
+    mysql_server_location: westeurope
+    geo_redundant_backup_enabled: 'false'
+    database_name: namemysqldatabase4647182973466
+    mysql_tags: 
+      AtosManaged: 'true'
+
+cosmosdb:
+  cosmosdb1:
+    azure_region: westeurope
+    organization_code: sie
+    environment_code: t
+    subscription_code: lz1
+    resource_group_name: sie-lz1-t-rsg-cosmosdb
+    location: westeurope
+    dbname: mongo-db-name1
+    collection_name: mongo-collection-1
+    interval_in_minutes: 60
+    # retention_in_hours: 8
+    default_ttl_seconds: 777
+    shard_key: UniqueKey
+    cosmosdb_tags:
+      User_id: A827884
+      User_email: Jason@atos.net
+      Dapartment: CES
+      AtosManaged: 'true'
+
+sql-database:
+  sql1:
+    azure_region: westeurope
+    organization-code: sei
+    subscription-code: lz1
+    environment-code: d
+    resource_group_name: sie-lan1-t-rsg-spoke-network
+    location: West Europe
+    name_mssql: namemssqlsql41157551
+    zone_redundant: 'false'
+    storage_account_type: 'Geo'
+    tags:
+      AtosManaged: 'true'
+    mssql_db_tags:
+      AtosManaged: 'true'
+
+loadbalancer-public:
+  lb-public1:
+    azure_region: westeurope
+    organization_code: sie
+    subscription_code: lan1
+    environment_code: t
+    resource_group_name: sie-lan1-t-rsg-lb-public
+    location: westeurope
+    lb_pip:   
+      pip1:
+        allocation_method: Static
+        idle_timeout_in_minutes: 10
+    backend_pool:
+      backpool1: string
+    backend_pool_address:
+      back1:
+        vnet_id: /subscriptions/b0caa0bb-b02a-4a10-8250-4d1fc2b094ab/resourceGroups/sie-lan1-t-rsg-lb-public/providers/Microsoft.Network/virtualNetworks/sie-lan1-t-vnet-lb-public
+        backend_ip: 10.0.0.0
+        backend_pool_name: backpool1
+    lb_probe:
+      probe155:
+        port: 20001 
+        interval_in_seconds: 10
+        number_of_probes: 10
+        backend_pool_name: backpool1
+    lb_rule:
+      rule155:
+        protocol: Tcp
+        frontend_port: 2200
+        backend_port: 2500
+        frontend_ip_name: pip1
+        disable_snat: true
+        enable_tcp_reset: false
+        idle_timeout: 10
+        enable_floating_ip: true
+        lb_backend_pool_name: backpool1
+        lb_probe_name: probe155
+    lb_nat_rule:
+      nat155:
+        lb_nat_rule_protocol: Tcp
+        lb_nat_rule_front_port: 2000
+        lb_nat_rule_back_port: 3000 
+        frontend_ip_name: pip1
+        idle_timeout_in_minutes: 10
+        lb_nat_rule_enable_floating_ip: false
+    lb_outbound_rule:
+      rule1:
+        lb_outbound_rule_protocol: Tcp
+        lb_outbound_rule_allocated_ports: 200
+        lb_outbound_rule_idle_timeout: 10
+        lb_backend_pool_name: backpool1
+    tags: 
+      AtosManaged: 'true'
+
+loadbalancer-private:
+  lb-private1:
+    azure_region: westeurope
+    organization_code: sie
+    subscription_code: lan1
+    environment_code: t
+    resource_group_name: sie-lan1-t-rsg-lb-priv
+    location: westeurope
+    sku: Standard
+    lb_private_ip:
+    - 
+      name : front1
+      subnet_id: /subscriptions/b0caa0bb-b02a-4a10-8250-4d1fc2b094ab/resourceGroups/sie-lan1-t-rsg-lb-priv/providers/Microsoft.Network/virtualNetworks/sie-lan1-t-vnet-lb/subnets/sie-lan1-t-subnet-lb
+      private_ip_address: 10.0.0.8
+      private_ip_address_allocation: Static
+    backend_pool_address: 
+      pooladd1:
+        vnet_id: /subscriptions/b0caa0bb-b02a-4a10-8250-4d1fc2b094ab/resourceGroups/sie-lan1-t-rsg-lb-priv/providers/Microsoft.Network/virtualNetworks/sie-lan1-t-vnet-lb
+        backend_ip: 10.0.0.0
+        backend_pool_name: pool1
+    backend_pool: 
+      pool1: string
+    lb_probe: 
+      probe1:
+        port: 80
+        protocol: Tcp
+        interval_in_seconds: 10
+        number_of_probes: 15
+    lb_rule: 
+      rule1:
+        protocol: Tcp
+        frontend_port: 80
+        backend_port: 80
+        frontend_ip_name: front1
+        lb_probe_name: probe1
+        lb_backend_pool_name: pool1
+        disable_snat: true
+        enable_tcp_reset: true
+        idle_timeout: 10
+        enable_floating_ip: false
+    lb_nat_rule:
+      nat1:
+        lb_nat_rule_protocol: Tcp
+        lb_nat_rule_front_port: 2000
+        lb_nat_rule_back_port: 3000
+        frontend_ip_name: front1
+        idle_timeout_in_minutes: 10
+        lb_nat_rule_enable_floating_ip: false
+        enable_tcp_reset: false
+    tags:
+      AtosManaged: 'true'
+      
+firewall-rules:
+  firewall-rules1:
+    resource_group_name: sie-lan1-t-rsg-fwr
+    resource_group_location: West Europe
+    firewall_policy_rule_collection_group_name: collection_group_name
+    collection_group_priority: 500
+    app_collection: 
+      collection1:
+        app_rule_collection_name: app-rule1
+        app_rule_collection_priority: 1000
+        app_rule_collection_action: Allow
+        app_rules:
+          app_rules1:
+            name: allow-rule
+            description: allow rule with htttps and https
+            protocols:
+              protocol1:
+                port: 80
+                type: Http
+              protocol2:
+                port: 443
+                type: Https 
+            source_addresses: 
+              - 10.0.0.1
+              - 10.0.0.2
+              
+aks: 
+ kube1:
+  azure_region: westeurope
+  organization_code: sie 
+  environment_code: t
+  subscription_code: lz1
+  tenant_id: 6b3621a7-a578-4317-9671-ee4d2d186cae
+  resource_group_name: sie-lz1-t-rsg
+  aks_tags:
+     User_id: A827884
+     User_email: Jason@atos.net
+     Dapartment: CES
+     AtosManaged: 'true'
