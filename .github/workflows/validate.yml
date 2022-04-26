@@ -61,12 +61,13 @@ jobs:
           filename: .github/deployment-approval.md
       - name: Validation
         run: 
-          echo "APPROVAL = Required" >> $GITHUB_ENV                
+          echo "APPROVAL = Required" >> $GITHUB_ENV
+          echo "$APPROVAL"                
 
   verify:
     runs-on: ubuntu-latest
     needs: [resource_validation]
-    if: env.APPROVAL == " "
+    
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
