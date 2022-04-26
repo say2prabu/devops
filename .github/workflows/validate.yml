@@ -50,7 +50,7 @@ jobs:
           pip install pandas
           python ./py_scripts/create_module.py dev.yaml
           echo "RES=$(python ./py_scripts/resource_validation.py)" >> $GITHUB_ENV                
-
+      
       - name: Create an issue
         id: validation
         if: env.RES > 10
@@ -60,8 +60,8 @@ jobs:
           RUNNUMBER: ${{ github.run_number }}
         with:
           filename: .github/deployment-approval.md
-      - name: Check on failure
-        if: job.steps.validation.status == failure()
+      - name: skip-job
+        if: ${{ steps.validation.outputs.skip }}
         run:
           exit 1           
 
