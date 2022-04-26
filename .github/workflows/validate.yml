@@ -54,7 +54,7 @@ jobs:
   resource_validation:
     runs-on: ubuntu-latest
     needs: [checkout]
-    if: env.RES > 10
+    if: ${{ env.RES > 10 }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
