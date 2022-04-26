@@ -8,8 +8,6 @@ on:
   pull_request:
     branches:
       - feature/mpctf-137
-  issue_comment:
-    types: [created]
     # paths:
     # - 'dev.yaml'
     # - '.github/workflows/main.yml'
