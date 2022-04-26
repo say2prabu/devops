@@ -61,7 +61,7 @@ jobs:
         with:
           filename: .github/deployment-approval.md
       - name: skip-job
-        if: ${{ steps.validation.outputs.skip }}
+        if: ${{ !steps.validation.outputs.success }}
         uses: actions/github-script@v3
         with:
           script:
