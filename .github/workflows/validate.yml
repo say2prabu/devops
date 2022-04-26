@@ -21,8 +21,8 @@ on:
     branches:
       - main
   
-  issue_comment:
-    types: [created]
+  #issue_comment:
+  #  types: [created]
     # paths:
     # - 'dev.yaml'
     # - '.github/workflows/main.yml'
