@@ -29,7 +29,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  checkout:
+  resource_validation:
     runs-on: ubuntu-latest
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -49,33 +49,20 @@ jobs:
           sudo apt-get -qq -y install python3-pip > /dev/null
           pip install pandas
           python ./py_scripts/create_module.py dev.yaml
-          echo "RES=$(python ./py_scripts/resource_validation.py)" >> $GITHUB_ENV
-  
-  resource_validation:
-    runs-on: ubuntu-latest
-    needs: [checkout]
-    if: ${{ env.RES > 10 }}
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+          echo "RES=$(python ./py_scripts/resource_validation.py)" >> $GITHUB_ENV                
 
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
       - name: Create an issue
-    
+        if: env.RES > 4
         uses: JasonEtco/create-an-issue@v2.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUNNUMBER: ${{ github.run_number }}
         with:
-          filename: .github/deployment-approval.md
-            
+          filename: .github/deployment-approval.md           
+
   verify:
     runs-on: ubuntu-latest
     needs: [resource_validation]
-    if: ${{ cancelled() }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
