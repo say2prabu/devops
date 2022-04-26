@@ -96,7 +96,7 @@ jobs:
 
   verify:
     runs-on: ubuntu-latest
-    needs: [approval_req?,pending_for_approval]
+    needs: [approval_req?, pending_for_approval]
     if: ${{ always() }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
