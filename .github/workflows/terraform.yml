@@ -17,7 +17,6 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   resource_validation:
-    if: ${{ !github.event.issue.pull_request && github.event.comment.body != 'Approved'}}
     runs-on: ubuntu-latest
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -30,7 +29,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Create an issue
-        if: 5 > 4
+        if: ${{ github.event.comment.body != 'Approved'}} && 5 > 4
         uses: JasonEtco/create-an-issue@v2.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
