@@ -17,7 +17,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   resource_validation:
-    if: ${{ github.event.name ="pull_request" && github.event.comment.body != 'Approved' && 3 > 4 }}
+    if: ${{ github.event.name ='pull_request' && github.event.comment.body != 'Approved' && 3 > 4 }}
     runs-on: ubuntu-latest
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
