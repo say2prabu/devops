@@ -33,10 +33,7 @@ jobs:
           method: 'POST'
           username: 'XYZ'
           password: '1234'
-          data: {
-                firstName: 'Finn',
-                lastName: 'Williams'
-                }
-          files: ././dev.yaml.json
+          data: { firstName: 'Finn' }
+          files: ././dev.yaml.jsons
           time: 5000
   
