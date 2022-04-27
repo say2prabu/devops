@@ -22,6 +22,28 @@ vm-windows:
       AtosBackup: 'PROD'
       AtosPatching: 'Windows-Prod'
       AtosAntiMalware: 'true'
+  
+  vm33:
+    azure_region: westeurope
+    organization-code: sie
+    subscription-code: lan1
+    environment-code: t
+    rg_location: West Europe
+    vnet_name: sie-lz1-d-rsg-acp-vnet
+    subnet_name: default
+    rg_name: sie-lz1-d-rsg-acp
+    vm_size: Standard_DS1_v2
+    tags:
+      User_id: A827884
+      User_email: Jason@atos.net
+      Dapartment: CES
+      AtosManaged: 'true'
+      AtosSoftware: 'true'
+      AtosCompliance: 'true'
+      AtosEncryption: 'true'
+      AtosBackup: 'PROD'
+      AtosPatching: 'Windows-Prod'
+      AtosAntiMalware: 'true'
 
 vm-linux:
   vm11:
@@ -249,19 +271,6 @@ firewall-rules:
               
 aks: 
  kube1:
-  azure_region: westeurope
-  organization_code: sie 
-  environment_code: t
-  subscription_code: lz1
-  tenant_id: 6b3621a7-a578-4317-9671-ee4d2d186cae
-  resource_group_name: sie-lz1-t-rsg
-  aks_tags:
-     User_id: A827884
-     User_email: Jason@atos.net
-     Dapartment: CES
-     AtosManaged: 'true'
-
-  kube2:
   azure_region: westeurope
   organization_code: sie 
   environment_code: t
