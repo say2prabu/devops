@@ -33,5 +33,6 @@ jobs:
           method: 'POST'
           username: 'XYZ'
           password: '1234'
+          data: { Name = "CustomerData"; Value = "xyz"}
 
   
