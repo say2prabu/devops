@@ -180,6 +180,6 @@ jobs:
     if: always()
     steps:
       - name: Job3 Status -> Workflow Status
-      - uses: technote-space/workflow-conclusion-action@v2
+        uses: technote-space/workflow-conclusion-action@v2
         if: env.WORKFLOW_CONCLUSION == 'failure'
         run: exit 0
