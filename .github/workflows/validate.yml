@@ -178,7 +178,7 @@ jobs:
     needs: [approval_required_if_rc_gt_10, pending_for_approval, verify]
     runs-on: ubuntu-latest
     if: always()
-      steps:
+    steps:
       - name: Job3 Status -> Workflow Status
       - uses: technote-space/workflow-conclusion-action@v2
       - name: Check Job Status status and fail if they are red
