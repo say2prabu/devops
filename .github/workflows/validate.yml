@@ -98,7 +98,8 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     needs: [approval_required_if_rc_gt_10, pending_for_approval]
-    if: ${{ always() && needs.approval_required_if_rc_gt_10.result != 'success' || needs.pending_for_approval.result == 'success' }}
+    #if: ${{ always() && needs.approval_required_if_rc_gt_10.result != 'success' || needs.pending_for_approval.result == 'success' }}
+    if: ${{ always() && needs.approval_required_if_rc_gt_10.validation.result != 'success' || needs.pending_for_approval.result == 'success' }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
@@ -172,14 +173,3 @@ jobs:
       - name: Run Terraform Plan
         run: |
           terraform -chdir="$ENV" plan -var-file="tf.creds.config.json"
-      
-      
-  workflow_status:
-    needs: [approval_required_if_rc_gt_10, pending_for_approval, verify]
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: Job3 Status -> Workflow Status
-        uses: technote-space/workflow-conclusion-action@v2
-        if: env.WORKFLOW_CONCLUSION == 'failure'
-        run: exit 0
