@@ -70,7 +70,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script:
-            core.setCancelled('Resource is less than or equal to 10')           
+            core.setneutral('Resource is less than or equal to 10')           
   
   pending_for_approval:
     runs-on: ubuntu-latest
