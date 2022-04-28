@@ -98,7 +98,7 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     needs: [approval_required_if_rc_gt_10, pending_for_approval]
-     if: ${{ always() && needs.approval_required_if_rc_gt_10.validation.result != 'success' || needs.pending_for_approval.result == 'success' }}
+    if: ${{ always() && needs.approval_required_if_rc_gt_10.validation.result != 'success' || needs.pending_for_approval.result == 'success' }}
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
