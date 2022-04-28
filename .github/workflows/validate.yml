@@ -40,7 +40,7 @@ jobs:
       run:
         shell: bash
     outputs:
-      matrix: ${{ steps.validation.outputs.matrix }}
+      matrix: ${{ steps.validation.outputs.approval_required_if_rc_gt_10 }}
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -67,12 +67,12 @@ jobs:
           RUNNUMBER: ${{ github.run_number }}
         with:
           filename: .github/deployment-approval.md
-      - name: skip-job
-        if: ${{ steps.validation.outcome != 'success' }}
-        uses: actions/github-script@v3
-        with:
-          script:
-            core.setFailed('Resource is less than or equal to 10')           
+#      - name: skip-job
+#        if: ${{ steps.validation.outcome != 'success' }}
+#        uses: actions/github-script@v3
+#        with:
+#          script:
+#            core.setFailed('Resource is less than or equal to 10')           
       - name: echo
         run:
           echo "::set-output name=matrix::$matrix"
