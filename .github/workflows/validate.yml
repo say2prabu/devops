@@ -39,6 +39,8 @@ jobs:
     defaults:
       run:
         shell: bash
+    outputs:
+      matrix: ${{ steps.validation.outputs.matrix }}
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -70,7 +72,12 @@ jobs:
         uses: actions/github-script@v3
         with:
           script:
-            core.setneutral('Resource is less than or equal to 10')           
+            core.setFailed('Resource is less than or equal to 10')           
+      - name: echo
+        run:
+          echo "::set-output name=matrix::$matrix"
+          echo "$matrix"
+
   
   pending_for_approval:
     runs-on: ubuntu-latest
