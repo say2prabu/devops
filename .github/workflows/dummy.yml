@@ -60,14 +60,9 @@ jobs:
       - name: Create an issue
         id: validation
         if: 3 > 2
-        uses: JasonEtco/create-an-issue@v2.6.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUNNUMBER: ${{ github.run_number }}
-        with:
-          filename: .github/deployment-approval.md
-          run:
-            echo "::set-output name=alive::true"
+        run: |
+          echo "::set-output name=matrix::true"
+      
         
   pending_for_approval:
     runs-on: ubuntu-latest
