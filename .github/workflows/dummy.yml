@@ -67,7 +67,7 @@ jobs:
         with:
           filename: .github/deployment-approval.md
           run:
-            matrix = 0
+            echo "::set-output name=alive::true"
         
   pending_for_approval:
     runs-on: ubuntu-latest
