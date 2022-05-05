@@ -74,7 +74,7 @@ jobs:
 #          script:
 #            core.setFailed('Resource is less than or equal to 10')           
       - name: echo
-        if: ${{steps.outputs.matrix == 'success'}}
+        if: ${{steps.validation.outputs.matrix == 'success'}}
         run:
           echo "success"
 
