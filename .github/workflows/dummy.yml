@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: tf-validate
+name: tf-dummy
 env:
 
   ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
