@@ -33,28 +33,47 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   approval_required_if_rc_gt_10:
-#    if: ${{ github.event.comment.body != 'Approved' }}
+    if: ${{ github.event.comment.body != 'Approved' }}
     runs-on: ubuntu-latest
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-
+    outputs:
+      matrix: ${{ steps.validation.outputs.matrix }}
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
-#        - build  # your custom job from your config, that builds your code
-        - test1: # your custom job; runs test suite 1
-           requires: # test1 will not run until the `build` job is completed.
-           - build
-        - test2: # another custom job; runs test suite 2,
-           requires: # test2 is dependent on the success of job `test1`
-           - test1
-        - hold: # <<< A job that will require manual approval in the CircleCI web application.
-           type: approval # <<< This key-value pair will set your workflow to a status of "On Hold"
-           requires: # We only run the "hold" job when test2 has succeeded
-              - test2
-      # On approval of the `hold` job, any successive job that requires the `hold` job will run.
-      # In this case, a user is manually triggering the deploy job.
-        - deploy:
-           requires:
-             - hold
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Install yq tool
+        run: |
+          wget --no-verbose --quiet https://github.com/mikefarah/yq/releases/download/v4.24.4/yq_linux_386.tar.gz -O - |\
+          tar xz && sudo mv yq_linux_386 /usr/bin/yq
+      - name: Install Python pip
+        run: |
+          sudo apt-get -qq -y update > /dev/null
+          sudo apt-get -qq -y install python3-pip > /dev/null
+          pip install pandas
+          python ./py_scripts/create_module.py dev.yaml
+          echo "$RES"
+          echo "RES=$(python ./py_scripts/resource_validation.py)" >> $GITHUB_ENV                
+      
+      - name: Create an issue
+        id: validation
+        if: 1 > 2
+        uses: JasonEtco/create-an-issue@v2.6.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUNNUMBER: ${{ github.run_number }}
+        with:
+          filename: .github/deployment-approval.md
+  
+  pending_for_approval:
+    runs-on: ubuntu-latest
+    needs: [approval_required_if_rc_gt_10]
+    if: ${{ always() && needs.approval_required_if_rc_gt_10.outputs.matrix == 'true'}}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: echo
+        run: echo "Issue Created"
