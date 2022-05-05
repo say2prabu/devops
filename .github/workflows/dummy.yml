@@ -1,32 +1,60 @@
-name: tf-approval
+# This is a basic workflow to help you get started with Actions
+
+name: tf-validate
+env:
+
+  ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.SUB_ID_LZ1 }}
+  ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+  ARM_ACCESS_KEY: ${{ secrets.DEV_SA_TOKEN }}
+  SUB_ID_LZ1: ${{ secrets.SUB_ID_LZ1 }}
+  TF_STATE_SA_RG_NAME: ${{ secrets.SA_RG_NAME }}
+  TF_STATE_SA_NAME: ${{ secrets.SA_NAME }}
+  TF_STATE_SA_CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+
+
+# Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   pull_request:
     branches:
       - main
-workflows:
-  version: 2
-  build-test-and-approval-deploy:
-    jobs:
-      job1:
-        defaults:
-        run:
+  
+  issue_comment:
+    types: [created]
+    # paths:
+    # - 'dev.yaml'
+    # - '.github/workflows/main.yml'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  approval_required_if_rc_gt_10:
+#    if: ${{ github.event.comment.body != 'Approved' }}
+    runs-on: ubuntu-latest
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
         shell: bash
-        
-        steps:
-          - build  # your custom job from your config, that builds your code
-          - test1: # your custom job; runs test suite 1
-            requires: # test1 will not run until the `build` job is completed.
-            - build
-          - test2: # another custom job; runs test suite 2,
-            requires: # test2 is dependent on the success of job `test1`
-            - test1
-          - hold: # <<< A job that will require manual approval in the CircleCI web application.
-            type: approval # <<< This key-value pair will set your workflow to a status of "On Hold"
-            requires: # We only run the "hold" job when test2 has succeeded
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
+#        - build  # your custom job from your config, that builds your code
+        - test1: # your custom job; runs test suite 1
+           requires: # test1 will not run until the `build` job is completed.
+           - build
+        - test2: # another custom job; runs test suite 2,
+           requires: # test2 is dependent on the success of job `test1`
+           - test1
+        - hold: # <<< A job that will require manual approval in the CircleCI web application.
+           type: approval # <<< This key-value pair will set your workflow to a status of "On Hold"
+           requires: # We only run the "hold" job when test2 has succeeded
               - test2
       # On approval of the `hold` job, any successive job that requires the `hold` job will run.
       # In this case, a user is manually triggering the deploy job.
-          - deploy:
-            requires:
-              - hold
+        - deploy:
+           requires:
+             - hold
